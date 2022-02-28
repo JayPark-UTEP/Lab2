@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <stdlib.h> // malloc & free
 #include <stdint.h> // use guaranteed 64-bit integers
-#include "tokenizer.h" // Create header file and reference that
+//#include "tokenizer.h" // Create header file and reference that
 #include "memory.h" // built-in functions to read and write to a specific file
 
 int32_t* reg; // Array of 32 32-bit registers
@@ -31,7 +31,39 @@ void init_regs(){
  * as a parameter to this function.
  */
 bool interpret(char* instr){
-	return true;
+	//storing inputs into tokens
+	char* token = strtoK(instr, ' ' & ',');
+	
+	if(token[0] == "LW"){
+	//LOADING WORD
+		return token[1] + token[2];
+
+	}else if(token[0] == "SW"){
+	//store word
+		return token[1] + token[2];
+
+
+	}else if(token[0] == "ADD"){
+	//add
+		return token[1] = token[2] + token[3];
+
+
+	}else if(token[0] == "ADDI"){
+	//Add imediate
+		return token[1] = token[2] + token[3];
+
+	}else if(token[0] == "AND"){
+		//and
+
+	}else if(token[0] == "OR"){
+		//or
+
+	}else if(token[0] == "XOR"){
+		//xor
+	
+	}
+
+
 }
 
 
@@ -56,6 +88,19 @@ void write_read_demo(){
 }
 
 /**
+ * Prints all 32 registers in column-format
+ */
+void print_regs(){
+	int col_size = 10;
+	for(int i = 0; i < 8; i++){
+		printf("X%02i:%.*lld", i, col_size, (long long int) reg[i]);
+		printf(" X%02i:%.*lld", i+8, col_size, (long long int) reg[i+8]);
+		printf(" X%02i:%.*lld", i+16, col_size, (long long int) reg[i+16]);
+		printf(" X%02i:%.*lld\n", i+24, col_size, (long long int) reg[i+24]);
+	}
+}
+
+/**
  * Your code goes in the main
  *
  */
@@ -63,8 +108,30 @@ int main(){
 	// Do not write any code between init_regs
 	init_regs(); // DO NOT REMOVE THIS LINE
 
+	print_regs();
+
 	// Below is a sample program to a write-read. Overwrite this with your own code.
-	write_read_demo();
+	//write_read_demo();
+
+	printf(" RV32 Interpreter.\nType RV32 instructions. Use upper-case letters and space as a delimiter.\nEnter 'EOF' character to end program\n");
+
+
+	char* instruction = malloc(1000 * sizeof(char));
+	bool is_null = false;
+	// fgets() returns null if EOF is reached.
+	is_null = fgets(instruction, 1000, stdin) == NULL;
+	while(!is_null){
+		interpret(instruction);
+		printf("\n");
+		print_regs();
+		printf("\n");
+
+		is_null = fgets(instruction, 1000, stdin) == NULL;
+	}
+
+	printf("Good bye!\n");
 
 	return 0;
 }
+
+
