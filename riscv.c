@@ -36,6 +36,10 @@ bool interpret(char* instr){
 	
 	if(token[0] == "LW"){
 	//LOADING WORD
+	//findng offset would be hard part
+	//LW x6 6(x2) -> 6(x2) value will be changed to x6
+	//x2 is usually 0
+	//using atoi function for x6
 		return token[1] + token[2];
 
 	}else if(token[0] == "SW"){
@@ -45,23 +49,31 @@ bool interpret(char* instr){
 
 	}else if(token[0] == "ADD"){
 	//add
-		return token[1] = token[2] + token[3];
+	int reg1 = atoi(instr[1]+1);
+	int reg2 = atoi(instr[2]+1);
+	int reg3 = atoi(instr[3]+1);
+
+	reg[reg1] = reg[reg2] + reg[reg3];
 
 
 	}else if(token[0] == "ADDI"){
 	//Add imediate
-		return token[1] = token[2] + token[3];
+	//add x0 x1 x2 = x0 = x1 + x2
+	//add x10 x11 x12
 
-	}else if(token[0] == "AND"){
-		//and
 
-	}else if(token[0] == "OR"){
-		//or
-
-	}else if(token[0] == "XOR"){
-		//xor
-	
 	}
+
+	// }else if(token[0] == "AND"){
+	// 	//and
+
+	// }else if(token[0] == "OR"){
+	// 	//or
+
+	// }else if(token[0] == "XOR"){
+	// 	//xor
+	
+	// }
 
 
 }
