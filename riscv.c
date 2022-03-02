@@ -32,38 +32,9 @@ void init_regs(){
  * as a parameter to this function.
  */
 
-
-bool checkToken(char* token, char* str){
-	int i = 0;
-	while(i < sizeof(token)){
-		if(str == token){
-			str++;
-			token++;
-			i++;
-		}
-	}
-	if(i == token){
-		return true;
-	}else{
-		return false;
-	}
-}
-
-int* decimalToBi (int decimal){
-
-	int binary[8], i;
-
-	for(i=0; decimal>0;i++){    
-		binary[i] = decimal%2;    
-		decimal = decimal/2;    
-	}
-
-	return binary;
-}
-
 bool checkingTok(char* tokens, char* operationStr){
 	int i = 0;
-	while(tokens != '/0'){
+	while(tokens[i] != '/0'){
 		if (tokens[i] == operationStr[i]){
 			i++;
 		};
@@ -76,20 +47,24 @@ bool checkingTok(char* tokens, char* operationStr){
 bool interpret(char* instr){
 	char* tokens = strtok(instr, ' ');
 	char* operation = tokens[0];
+	char* tok1 = tokens[1];
+	char* tok2 = tokens[2];
+	char* tok3 = tokens[3];
 
+//strtok(tokens,NULL)
 	int reg1, reg2, reg3;
 
 	if(checkingTok(operation, "ADD")){
-		reg1 = atoi(strtok(tokens[1], 'X'));
-		reg2 = atoi(strtok(tokens[2], 'X'));
-		reg3 = atoi(strtok(tokens[3], 'X'));
+		reg1 = atoi(strtok(tok1, 'X'));
+		reg2 = atoi(strtok(tok2, 'X'));
+		reg3 = atoi(strtok(tok3, 'X'));
 		
 		reg[reg1] = reg[reg2] + reg[reg3];
 		printf("Operation completed");
 	}else if(checkingTok(operation, "ADDI")){
-		reg1 = atoi(strtok(tokens[1], 'X'));
-		reg2 = atoi(strtok(tokens[2], 'X'));
-		reg3 = atoi(strtok(tokens[3], 'X'));
+		reg1 = atoi(strtok(tok1, 'X'));
+		reg2 = atoi(strtok(tok2, 'X'));
+		reg3 = atoi(strtok(tok3, 'X'));
 		
 		reg[reg1] = reg[reg2] + reg3;
 		printf("Operation completed");
