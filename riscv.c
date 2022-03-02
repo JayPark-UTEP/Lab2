@@ -4,6 +4,7 @@
 #include <stdint.h> // use guaranteed 64-bit integers
 //#include "tokenizer.h" // Create header file and reference that
 #include "memory.h" // built-in functions to read and write to a specific file
+#include "string.h"
 
 int32_t* reg; // Array of 32 32-bit registers
 
@@ -30,6 +31,8 @@ void init_regs(){
  * You may expect that a single, properly formatted RISC-V instruction string will be passed
  * as a parameter to this function.
  */
+
+
 bool checkToken(char* token, char* str){
 	int i = 0;
 	while(i < sizeof(token)){
@@ -39,61 +42,59 @@ bool checkToken(char* token, char* str){
 			i++;
 		}
 	}
-
 	if(i == token){
 		return true;
 	}else{
 		return false;
 	}
-
 }
-bool interpret(char* instr){
-	//storing inputs into tokens
-	char* token = strtok(instr, ' ' & ',');
 
-	//make a method that check token and the instruction
-	char* p = token[0];
-	
-	if(checkToken(p, "LW")){
-	//LOADING WORD
-	//findng offset would be hard part
-	//LW x6 6(x2) -> 6(x2) value will be changed to x6
-	//x2 is usually 0
-	//using atoi function for x6
+int* decimalToBi (int decimal){
 
-	}else if(checkToken(p, "SW")){
-	//store word
+	int binary[8], i;
 
-
-	}else if(checkToken(p, "ADD")){
-	//add
-	int reg1 = atoi(instr[1]+1);
-	int reg2 = atoi(instr[2]+1);
-	int reg3 = atoi(instr[3]+1);
-
-	reg[reg1] = reg[reg2] + reg[reg3];
-
-
-	}else if(checkToken(p, "ADDI")){
-	//Add imediate
-	//add x0 x1 x2 = x0 = x1 + x2
-	//add x10 x11 x12
-
-
+	for(i=0; decimal>0;i++){    
+		binary[i] = decimal%2;    
+		decimal = decimal/2;    
 	}
 
-	// }else if(token[0] == "AND"){
-	// 	//and
+	return binary;
+}
 
-	// }else if(token[0] == "OR"){
-	// 	//or
+bool checkingTok(char* tokens, char* operationStr){
+	int i = 0;
+	while(tokens != '/0'){
+		if (tokens[i] == operationStr[i]){
+			i++;
+		};
+	}
+	if(sizeOf(tokens)==i){
+		return true;
+	}
+}
 
-	// }else if(token[0] == "XOR"){
-	// 	//xor
-	
-	// }
+bool interpret(char* instr){
+	char* tokens = strtok(instr, ' ');
+	char* operation = tokens[0];
 
+	int reg1, reg2, reg3;
 
+	if(checkingTok(operation, "ADD")){
+		reg1 = atoi(strtok(tokens[1], 'X'));
+		reg2 = atoi(strtok(tokens[2], 'X'));
+		reg3 = atoi(strtok(tokens[3], 'X'));
+		
+		reg[reg1] = reg[reg2] + reg[reg3];
+		printf("Operation completed");
+	}else if(checkingTok(operation, "ADDI")){
+		reg1 = atoi(strtok(tokens[1], 'X'));
+		reg2 = atoi(strtok(tokens[2], 'X'));
+		reg3 = atoi(strtok(tokens[3], 'X'));
+		
+		reg[reg1] = reg[reg2] + reg3;
+		printf("Operation completed");
+
+	}
 }
 
 
