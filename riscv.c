@@ -30,24 +30,42 @@ void init_regs(){
  * You may expect that a single, properly formatted RISC-V instruction string will be passed
  * as a parameter to this function.
  */
+bool checkToken(char* token, char* str){
+	int i = 0;
+	while(i < sizeof(token)){
+		if(str == token){
+			str++;
+			token++;
+			i++;
+		}
+	}
+
+	if(i == token){
+		return true;
+	}else{
+		return false;
+	}
+
+}
 bool interpret(char* instr){
 	//storing inputs into tokens
-	char* token = strtoK(instr, ' ' & ',');
+	char* token = strtok(instr, ' ' & ',');
+
+	//make a method that check token and the instruction
+	char* p = token[0];
 	
-	if(token[0] == "LW"){
+	if(checkToken(p, "LW")){
 	//LOADING WORD
 	//findng offset would be hard part
 	//LW x6 6(x2) -> 6(x2) value will be changed to x6
 	//x2 is usually 0
 	//using atoi function for x6
-		return token[1] + token[2];
 
-	}else if(token[0] == "SW"){
+	}else if(checkToken(p, "SW")){
 	//store word
-		return token[1] + token[2];
 
 
-	}else if(token[0] == "ADD"){
+	}else if(checkToken(p, "ADD")){
 	//add
 	int reg1 = atoi(instr[1]+1);
 	int reg2 = atoi(instr[2]+1);
@@ -56,7 +74,7 @@ bool interpret(char* instr){
 	reg[reg1] = reg[reg2] + reg[reg3];
 
 
-	}else if(token[0] == "ADDI"){
+	}else if(checkToken(p, "ADDI")){
 	//Add imediate
 	//add x0 x1 x2 = x0 = x1 + x2
 	//add x10 x11 x12
