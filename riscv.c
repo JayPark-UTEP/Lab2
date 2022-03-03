@@ -54,7 +54,8 @@ bool interpret(char* instr){
    
 
 //strtok(tokens,NULL)
-	int reg1, reg2, resif(checkingTok(operation, "ADD")){
+	int reg1, reg2, reg3;
+	if(checkingTok(operation, "ADD")){
 		reg1 = atoi(strtok(tok1, 'X'));
 		reg2 = atoi(strtok(tok2, 'X'));
 		reg3 = atoi(strtok(tok3, 'X'));
