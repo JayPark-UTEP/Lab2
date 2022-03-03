@@ -24,54 +24,63 @@ void init_regs(){
 		reg[i] = i;
 }
 
-
-
 /**
  * Fill out this function and use it to read interpret user input to execute RV64 instructions.
  * You may expect that a single, properly formatted RISC-V instruction string will be passed
  * as a parameter to this function.
  */
 
-bool checkingTok(char* tokens, char* operationStr){
-	int i = 0;
-	while(tokens[i] != '/0'){
-		if (tokens[i] == operationStr[i]){
-			i++;
-		};
-	}
-	if(sizeOf(tokens)==i){
-		return true;
-	}
-}
-
 bool interpret(char* instr){
-	char* tokens = strtok(instr, ' ');
-	char* operation = tokens[0];
-	char* tok1 = tokens[1];
-	char* tok2 = tokens[2];
-	char* tok3 = tokens[3];
+	char* token = strtok(instr, " ");
 
-//strtok(tokens,NULL)
-	int reg1, reg2, reg3;
-
-	if(checkingTok(operation, "ADD")){
-		reg1 = atoi(strtok(tok1, 'X'));
-		reg2 = atoi(strtok(tok2, 'X'));
-		reg3 = atoi(strtok(tok3, 'X'));
+	if((token[0] == 'A') && (token[1] == 'D') && (token[2] == 'D') && (token[3] == 'I')){
 		
-		reg[reg1] = reg[reg2] + reg[reg3];
-		printf("Operation completed");
-	}else if(checkingTok(operation, "ADDI")){
-		reg1 = atoi(strtok(tok1, 'X'));
-		reg2 = atoi(strtok(tok2, 'X'));
-		reg3 = atoi(strtok(tok3, 'X'));
-		
-		reg[reg1] = reg[reg2] + reg3;
-		printf("Operation completed");
+		int x = (int)(token[6])-48;
+		int y = (int)(token[9])-48;
+		int z = (int)(token[12])-48;
 
+		reg[x] = y + z;
+
+		printf("Operation is completed");
+		
+
+	}else if((token[0] == 'A') && (token[1] == 'D') && (token[2] == 'D')){
+		
+		int x = (int)(token[6])-48;
+		int y = (int)(token[9])-48;
+		int z = (int)(token[12])-48;
+
+		reg[x] = y + z;
+
+		printf("Operation is completed");
+
+	}else if((token[0] == 'L') && (token[1] == 'W')){
+		int x = (int)(token[4])-48;
+		int y = (int)(token[6])-48;
+		int z = (int)(token[9])-48;
+		
+		int offSet = y + z;
+
+		int32_t data = read_address(offSet, "mem.txt");
+        
+		reg[x] = data;
+		printf("Operation is completed");
+	
+	}else if((token[0] == 'S') && (token[1] == 'W')){
+		int x = (int)(token[4])-48;
+		int y = (int)(token[6])-48;
+		int z = (int)(token[9])-48;
+
+		int offSet = y + z;
+
+		int32_t memory = write_address(x, offSet, "mem.txt");
+
+		printf("Operation is completed");
+
+	}else{
+		printf("Worng operation");
 	}
 }
-
 
 /**
  * Simple demo program to show the usage of read_address() and write_address() found in memory.c
