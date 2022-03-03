@@ -46,13 +46,12 @@ bool checkingTok(char* tokens, char* operationStr){
 
 bool interpret(char* instr){
 	
-	ar* tokens = strtok(instr, ' ');
+	char* tokens = strtok(instr, " ");
 	char* operation = tokens[0];
 	char* tok1 = tokens[1];
 	char* tok2 = tokens[2];
 	char* tok3 = tokens[3];
-    	
-	printf("%s", tokens);
+   
 
 //strtok(tokens,NULL)
 	int reg1, reg2, resif(checkingTok(operation, "ADD")){
