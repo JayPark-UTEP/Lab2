@@ -35,48 +35,58 @@ bool interpret(char* instr){
 
 	if((token[0] == 'A') && (token[1] == 'D') && (token[2] == 'D') && (token[3] == 'I')){
 		
-		int x = (int)(token[6])-48;
-		int y = (int)(token[9])-48;
-		int z = (int)(token[12])-48;
+		int x = ((int)(token[6]-48)*10 + (int)(token[7])-48);
+		int y = ((int)(token[10]-48)*10 + (int)(token[11])-48);
+		int z = ((int)(token[13]-48)*10 + (int)(token[14])-48);
 
-		reg[x] = y + z;
+		if ((x > -1) && (x < 32) && (y > -1) && (y < 32) && (z > -1) && (z < 32)){
+
+			reg[x] = y + z;
+		}
 
 		printf("Operation is completed");
-		
 
 	}else if((token[0] == 'A') && (token[1] == 'D') && (token[2] == 'D')){
 		
-		int x = (int)(token[6])-48;
-		int y = (int)(token[9])-48;
-		int z = (int)(token[12])-48;
+		int x = ((int)(token[5]-48)*10 + (int)(token[6])-48);
+		int y = ((int)(token[9]-48)*10 + (int)(token[10])-48);
+		int z = ((int)(token[13]-48)*10 + (int)(token[14])-48);
 
-		reg[x] = y + z;
+		if ((x > -1) && (x < 32) && (y > -1) && (y < 32) && (z > -1) && (z < 32)){
+
+			reg[x] = y + z;
+		}
 
 		printf("Operation is completed");
 
 	}else if((token[0] == 'L') && (token[1] == 'W')){
-		int x = (int)(token[4])-48;
-		int y = (int)(token[6])-48;
-		int z = (int)(token[9])-48;
-		
-		int offSet = y + z;
+		int x = ((int)(token[4]-48)*10 + (int)(token[5])-48);
+		int y = ((int)(token[7]-48)*10 + (int)(token[8])-48);
+		int z = ((int)(token[11]-48)*10 + (int)(token[12])-48);
 
-		int32_t data = read_address(offSet, "mem.txt");
-        
-		reg[x] = data;
+		if ((x > -1) && (x < 32) && (y > -1) && (y < 32) && (z > -1) && (z < 32)){
+
+			int offSet = y + z;
+
+			int32_t data = read_address(offSet, "mem.txt");
+			
+			reg[x] = data;
+		}
 		printf("Operation is completed");
 	
 	}else if((token[0] == 'S') && (token[1] == 'W')){
-		int x = (int)(token[4])-48;
-		int y = (int)(token[6])-48;
-		int z = (int)(token[9])-48;
+		int x = ((int)(token[4]-48)*10 + (int)(token[5])-48);
+		int y = ((int)(token[7]-48)*10 + (int)(token[8])-48);
+		int z = ((int)(token[11]-48)*10 + (int)(token[12])-48);
 
-		int offSet = y + z;
+		if ((x > -1) && (x < 32) && (y > -1) && (y < 32) && (z > -1) && (z < 32)){
 
-		int32_t memory = write_address(x, offSet, "mem.txt");
+			int offSet = y + z;
 
+			int32_t memory = write_address(x, offSet, "mem.txt");
+
+		}
 		printf("Operation is completed");
-
 	}else{
 		printf("Worng operation");
 	}
