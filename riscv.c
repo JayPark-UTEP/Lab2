@@ -15,7 +15,7 @@ void write_read_demo();
 /**
  * Initialize register array for usage.
  * Malloc space for each 32-bit register then initializes each register to 0.
- * Do not alter this function!
+ s* Do not alter this function!
  */
 void init_regs(){
 	int reg_amount = 32;
@@ -44,7 +44,7 @@ bool interpret(char* instr){
 			reg[x] = y + z;
 		}
 
-		printf("Operation is completed");
+		printf("Operation is completed");		
 
 	}else if((token[0] == 'A') && (token[1] == 'D') && (token[2] == 'D')){
 		
