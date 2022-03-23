@@ -83,7 +83,7 @@ bool interpret(char* instr){
 
 			int offSet = y + z;
 
-			int32_t memory = write_address(x, offSet, "mem.txt");
+			int32_t memory = write_address(reg[x], offSet, "mem.txt");
 
 		}
 		printf("Operation is completed");
